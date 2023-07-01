@@ -5,11 +5,11 @@ import pro.sky.java.course2.hwlists.domain.Employee;
 import java.util.ArrayList;
 
 public interface EmployeeService {
-    Employee addEmployee(Employee employee);
+    Employee addEmployee(String firstName, String lastName);
 
-    Employee removeEmployee(Employee employee);
+    Employee removeEmployee(String firstName, String lastName);
 
-    Employee findEmployee(Employee employee);
+    Employee findEmployee(String firstName, String lastName);
 
-    ArrayList<Employee> showEmployeeList();
+    //ArrayList<Employee> showEmployeeList();
 }

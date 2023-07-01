@@ -5,11 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.java.course2.hwlists.domain.Employee;
-import pro.sky.java.course2.hwlists.exceptions.EmployeeStorageIsFullException;
 import pro.sky.java.course2.hwlists.service.EmployeeService;
-import pro.sky.java.course2.hwlists.service.EmployeeServiceImpl;
-
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/employee")
@@ -25,27 +21,23 @@ public class EmployeeController {
     @GetMapping("/add")
     public Employee addEmployee(@RequestParam String firstName,
                               @RequestParam String lastName) {
-
-        Employee employee = new Employee(firstName, lastName);
-        return employeeService.addEmployee(employee);
+        return employeeService.addEmployee(firstName, lastName);
     }
 
     @GetMapping("/remove")
     public Employee removeEmployee(@RequestParam String firstName,
                                  @RequestParam String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        return employeeService.removeEmployee(employee);
+        return employeeService.removeEmployee(firstName, lastName);
     }
 
     @GetMapping("/find")
     public Employee findEmployee(@RequestParam String firstName,
                                @RequestParam String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        return employeeService.findEmployee(employee);
+        return employeeService.findEmployee(firstName, lastName);
     }
 
-    @GetMapping
+/*    @GetMapping
     public ArrayList<Employee> showEmployeeList() {
         return employeeService.showEmployeeList();
-    }
+    }*/
 }
