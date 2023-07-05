@@ -5,6 +5,8 @@ import pro.sky.java.course2.hwlists.domain.Employee;
 import pro.sky.java.course2.hwlists.exceptions.EmployeeAlreadyAddedException;
 import pro.sky.java.course2.hwlists.exceptions.EmployeeNotFoundException;
 
+
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +46,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         } else {
             throw new EmployeeNotFoundException();
         }
+    }
+
+    @Override
+    public Collection<Employee> showEmployeeList() {
+        return employees.values();
     }
 
 }
