@@ -19,32 +19,32 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee addEmployee(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
+    public Employee addEmployee(String firstName, String lastName, Integer department, Integer salary) {
+        Employee employee = new Employee(firstName, lastName, department, salary);
         if (employees.containsKey(firstName + lastName)) {
-            throw new EmployeeAlreadyAddedException();
+            throw new EmployeeAlreadyAddedException("Работник уже существует");
         }
         employees.put(firstName + lastName, employee);
         return employee;
     }
 
     @Override
-    public Employee removeEmployee(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
+    public Employee removeEmployee(String firstName, String lastName, Integer department, Integer salary) {
+        Employee employee = new Employee(firstName, lastName, department, salary);
         if (!employees.containsKey(firstName + lastName)) {
-            throw new EmployeeNotFoundException();
+            throw new EmployeeNotFoundException("Работник не найден");
         }
         employees.remove(firstName + lastName, employee);
         return employee;
     }
 
     @Override
-    public Employee findEmployee(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
+    public Employee findEmployee(String firstName, String lastName, Integer department, Integer salary) {
+        Employee employee = new Employee(firstName, lastName, department, salary);
         if (employees.containsKey(firstName + lastName)) {
             return employee;
         } else {
-            throw new EmployeeNotFoundException();
+            throw new EmployeeNotFoundException("Работник не найден");
         }
     }
 
