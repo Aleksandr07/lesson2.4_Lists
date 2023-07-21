@@ -1,9 +1,11 @@
 package pro.sky.java.course2.hwlists.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.java.course2.hwlists.domain.Employee;
 import pro.sky.java.course2.hwlists.exceptions.EmployeeAlreadyAddedException;
 import pro.sky.java.course2.hwlists.exceptions.EmployeeNotFoundException;
+import pro.sky.java.course2.hwlists.exceptions.InvalidEmployeeName;
 
 
 import java.util.Collection;
@@ -20,6 +22,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(String firstName, String lastName, Integer department, Integer salary) {
+        firstName = checkNameAndCapitalize(firstName);
+        lastName = checkNameAndCapitalize(lastName);
         Employee employee = new Employee(firstName, lastName, department, salary);
         if (employees.containsKey(firstName + lastName)) {
             throw new EmployeeAlreadyAddedException("Работник уже существует");
@@ -30,6 +34,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee removeEmployee(String firstName, String lastName, Integer department, Integer salary) {
+        firstName = checkNameAndCapitalize(firstName);
+        lastName = checkNameAndCapitalize(lastName);
         Employee employee = new Employee(firstName, lastName, department, salary);
         if (!employees.containsKey(firstName + lastName)) {
             throw new EmployeeNotFoundException("Работник не найден");
@@ -40,6 +46,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findEmployee(String firstName, String lastName, Integer department, Integer salary) {
+        firstName = checkNameAndCapitalize(firstName);
+        lastName = checkNameAndCapitalize(lastName);
         Employee employee = new Employee(firstName, lastName, department, salary);
         if (employees.containsKey(firstName + lastName)) {
             return employee;
@@ -52,5 +60,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Collection<Employee> showEmployeeList() {
         return employees.values();
     }
+
+    private static String checkNameAndCapitalize(String name) throws InvalidEmployeeName{
+        if (!(StringUtils.isAlpha(name))) {
+            throw new InvalidEmployeeName();
+        }
+
+        return StringUtils.capitalize(name);
+    }
+
 
 }
