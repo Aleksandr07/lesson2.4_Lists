@@ -22,8 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(String firstName, String lastName, Integer department, Integer salary) {
-        firstName = checkNameAndCapitalize(firstName);
-        lastName = checkNameAndCapitalize(lastName);
+        checkInput(firstName, lastName);
         Employee employee = new Employee(firstName, lastName, department, salary);
         if (employees.containsKey(firstName + lastName)) {
             throw new EmployeeAlreadyAddedException("Работник уже существует");
@@ -34,8 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee removeEmployee(String firstName, String lastName, Integer department, Integer salary) {
-        firstName = checkNameAndCapitalize(firstName);
-        lastName = checkNameAndCapitalize(lastName);
+        checkInput(firstName, lastName);
         Employee employee = new Employee(firstName, lastName, department, salary);
         if (!employees.containsKey(firstName + lastName)) {
             throw new EmployeeNotFoundException("Работник не найден");
@@ -46,8 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findEmployee(String firstName, String lastName, Integer department, Integer salary) {
-        firstName = checkNameAndCapitalize(firstName);
-        lastName = checkNameAndCapitalize(lastName);
+        checkInput(firstName, lastName);
         Employee employee = new Employee(firstName, lastName, department, salary);
         if (employees.containsKey(firstName + lastName)) {
             return employee;
@@ -61,12 +58,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employees.values();
     }
 
-    private static String checkNameAndCapitalize(String name) throws InvalidEmployeeName{
-        if (!(StringUtils.isAlpha(name))) {
+    private static void checkInput(String firstName, String lastName) throws InvalidEmployeeName{
+        if (!(StringUtils.isAlpha(firstName) || StringUtils.isAlpha(lastName))) {
             throw new InvalidEmployeeName();
         }
-
-        return StringUtils.capitalize(name);
     }
 
 
