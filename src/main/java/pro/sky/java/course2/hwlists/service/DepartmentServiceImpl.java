@@ -16,25 +16,34 @@ public class DepartmentServiceImpl implements DepartmentService{
         this.employeeService = employeeService;
     }
 
+    @Override
+    public Integer findSumSalaryInDepartment(Integer department) {
+        return employeeService.showEmployeeList().stream()
+                .filter(employee -> employee.getDepartment() == department)
+                .map(Employee::getSalary)
+                .reduce(0, Integer::sum);
+    }
 
     @Override
-    public Employee findEmployeeWithMaxSalary(Integer department) {
+    public Integer findEmployeeWithMaxSalary(Integer department) {
         return employeeService.showEmployeeList().stream()
                 .filter(employee -> employee.getDepartment() == department)
                 .max(Comparator.comparingInt(Employee::getSalary))
+                .map(Employee::getSalary)
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
-    public Employee findEmployeeWithMinSalary(Integer department) {
+    public Integer findEmployeeWithMinSalary(Integer department) {
         return employeeService.showEmployeeList().stream()
                 .filter(employee -> employee.getDepartment() == department)
                 .min(Comparator.comparingInt(Employee::getSalary))
+                .map(Employee::getSalary)
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
-    public Collection<Employee> showAllEmployees(Integer department) {
+    public Collection<Employee> showAllEmployeesInDepartment(Integer department) {
             return employeeService.showEmployeeList().stream()
                 .filter(employee -> employee.getDepartment() == department)
                 .collect(Collectors.toList());

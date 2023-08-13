@@ -1,9 +1,6 @@
 package pro.sky.java.course2.hwlists.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pro.sky.java.course2.hwlists.domain.Employee;
 import pro.sky.java.course2.hwlists.service.DepartmentService;
 
@@ -12,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/departments")
+@RequestMapping("/department")
 
 public class DepartmentController {
     private final DepartmentService departmentService;
@@ -21,25 +18,30 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping("/max-salary")
-    public Employee findEmployeeWithMaxSalary(@RequestParam Integer departmentId) {
-        return departmentService.findEmployeeWithMaxSalary(departmentId);
+    @GetMapping("/{id}/salary/sum")
+    public Integer findSumSalaryInDepartment(@PathVariable Integer id) {
+        return departmentService.findSumSalaryInDepartment(id);
+    }
+
+    @GetMapping("/{id}/salary/max")
+    public Integer findEmployeeWithMaxSalary(@PathVariable Integer id) {
+        return departmentService.findEmployeeWithMaxSalary(id);
     }
 
 
-    @GetMapping("/min-salary")
-    public Employee findEmployeeWithMinSalary(@RequestParam Integer departmentId) {
-        return departmentService.findEmployeeWithMinSalary(departmentId);
+    @GetMapping("/{id}/salary/min")
+    public Integer findEmployeeWithMinSalary(@PathVariable Integer id) {
+        return departmentService.findEmployeeWithMinSalary(id);
     }
 
 
-    @GetMapping(value = "/all", params = {"departmentId"})
-    public Collection<Employee> showAllEmployeesInDepartment(Integer departmentId) {
-        return departmentService.showAllEmployees(departmentId);
+    @GetMapping("/{id}/employees")
+    public Collection<Employee> showAllEmployeesInDepartment(@PathVariable Integer id) {
+        return departmentService.showAllEmployeesInDepartment(id);
     }
 
-    @GetMapping("/all")
-    public Map<Integer, List<Employee>> showAllEmployeesInDepartment() {
+    @GetMapping("/employees")
+    public Map<Integer, List<Employee>> showAllEmployees() {
         return departmentService.showAllEmployees();
     }
 
